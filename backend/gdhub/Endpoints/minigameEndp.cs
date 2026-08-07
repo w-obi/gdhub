@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace gdhub.Endpoints;
 
-public static class minigameEndpoints
+public static class gameEndpoints
 {
     const string gameEndpoint = "GetGame";
 
     public static void MapMiniGameEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("/minigames");
+        var group = app.MapGroup("/games");
 
         group.MapGet("/", async (gdhubContext dbContext) => await dbContext.Games
         .Include(game => game)
@@ -40,7 +40,7 @@ public static class minigameEndpoints
             Game game = new()
             {
                 Name = newGame.Name,
-                Rating = 0,
+                Rating = newGame.Rating,
                 Summary = newGame.Summary,
                 Details = newGame.Details
             };

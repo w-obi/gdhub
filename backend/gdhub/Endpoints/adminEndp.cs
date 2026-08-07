@@ -1,85 +1,84 @@
-using dotnettut.Dtos;
-using dotnettut.Models;
-using dotnettut.Data;
+using gdhub.Dtos;
+using gdhub.Models;
+using gdhub.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace dotnettut.Endpoints;
+namespace gdhub.Endpoints;
 
-public static class GameEndpoints
+public static class adminEndpoints
 {
-    const string gameEndpoint = "GetGame";
+    const string adminEndpoint = "GetUsers";
 
-    public static void MapGameEndpoints(this WebApplication app)
+    public static void MapMiniadminEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("/games");
+        var group = app.MapGroup("/admin");
 
-        group.MapGet("/", async (GameStoreContext dbContext) => await dbContext.Games
-        .Include(game => game.Genre)
-        .Select(game => new GameSummaryDto(
-            game.Id,
-            game.Name,
-            game.Genre!.Name,
-            game.Price,
-            game.ReleaseDate
-        )).AsNoTracking().ToListAsync()).WithName(gameEndpoint);
+        group.MapGet("/", async (gdhubContext dbContext) => await dbContext.Users
+        .Include(user => user)
+        .Select(user => new UserSummaryDto(
+            user.Id,
+            user.Email,
+            user.Rank,
+            user.Exp
+        )).AsNoTracking().ToListAsync()).WithName(adminEndpoint);
 
-        group.MapGet("/{id}", async (int id, GameStoreContext dbContext) =>
+        group.MapGet("/{id}", async (int id, gdhubContext dbContext) =>
         {
-            var game = await dbContext.Games.FindAsync(id);
-            return game is null ? Results.NotFound() : Results.Ok(
-                    new GameDetailsDto(
-                    game.Id,
-                    game.Name,
-                    game.GenreId,
-                    game.Price,
-                    game.ReleaseDate
+            var user = await dbContext.Users.FindAsync(id);
+            return user is null ? Results.NotFound() : Results.Ok(
+                    new UserDetailsDto(
+                    user.Id,
+                    user.Email,
+                    user.Rank,
+                    user.Exp,
+                    user.GameRecords
                 )
             );
         });
 
-        group.MapPost("/", async (CreateGameDto newGame, GameStoreContext dbContext) =>
+        group.MapPost("/", async (CreateUserDto newUser, gdhubContext dbContext) =>
         {
-            Game game = new()
+            User user = new()
             {
-                Name = newGame.Name,
-                GenreId = newGame.GenreId,
-                Price = newGame.Price,
-                ReleaseDate = newGame.ReleaseDate
+                Email = newUser.Email,
+                Rank = newUser.Rank,
+                Exp = newUser.Exp,
+                GameRecords = newUser.GameRecords
             };
 
-            dbContext.Games.Add(game);
+            dbContext.Users.Add(user);
             await dbContext.SaveChangesAsync();
 
-            GameDetailsDto gameDto = new(
-                game.Id,
-                game.Name,
-                game.GenreId,
-                game.Price,
-                game.ReleaseDate
+            UserDetailsDto userDto = new(
+                    user.Id,
+                    user.Name,
+                    user.Rank,
+                    user.Exp,
+                    user.GameRecords
             );
 
-            return Results.CreatedAtRoute(gameEndpoint, new { id = game.Id }, gameDto);
+            return Results.CreatedAtRoute(adminEndpoint, new { id = user.Id }, userDto);
         });
 
-        group.MapPut("/{id}", async (int id, UpdateGameDto updated, GameStoreContext dbContext) =>
+        group.MapPut("/{id}", async (int id, UpdateUserDto updated, gdhubContext dbContext) =>
         {
-            var existingGame = await dbContext.Games.FindAsync(id);
+            var existingUser = await dbContext.Users.FindAsync(id);
 
-            if (existingGame is null) return Results.NotFound();
+            if (existingUser is null) return Results.NotFound();
 
-            existingGame.Name = updated.Name;
-            existingGame.GenreId = updated.GenreId;
-            existingGame.Price = updated.Price;
-            existingGame.ReleaseDate = updated.ReleaseDate;
+            existingUser.Name = updated.Name;
+            existingUser.Rank = updated.Rank;
+            existingUser.Exp = updated.Exp;
+            existingUser.GameRecords = updated.GameRecords;
 
             await dbContext.SaveChangesAsync();
 
             return Results.NoContent();
         });
 
-        group.MapDelete("/{id}", async (int id, GameStoreContext dbContext) =>
+        group.MapDelete("/{id}", async (int id, gdhubContext dbContext) =>
         {
-            await dbContext.Games.Where(game => game.Id == id).ExecuteDeleteAsync();
+            await dbContext.Users.Where(game => game.Id == id).ExecuteDeleteAsync();
             return Results.NoContent();
         });
     }
