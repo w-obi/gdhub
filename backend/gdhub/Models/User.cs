@@ -1,13 +1,7 @@
 namespace gdhub.Models;
 
+using gdhub.Enum;
 using System.Text.Json.Serialization;
-
-public enum UserRank
-{
-    Padawan,
-    Knight,
-    Master
-}
 
 public class User
 {

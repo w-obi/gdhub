@@ -8,13 +8,13 @@ namespace gdhub.Endpoints;
 public static class gameEndpoints
 {
     const string gameEndpoint = "GetGame";
+    const string getGameDetailsEndpoint = "GetGameDetails";
 
     public static void MapMiniGameEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/games");
 
         group.MapGet("/", async (gdhubContext dbContext) => await dbContext.Games
-        .Include(game => game)
         .Select(game => new GameSummaryDto(
             game.Id,
             game.Name,
@@ -33,7 +33,7 @@ public static class gameEndpoints
                     game.Details
                 )
             );
-        });
+        }).WithName(getGameDetailsEndpoint);
 
         group.MapPost("/", async (CreateGameDto newGame, gdhubContext dbContext) =>
         {
@@ -55,7 +55,7 @@ public static class gameEndpoints
                     game.Details
             );
 
-            return Results.CreatedAtRoute(gameEndpoint, new { id = game.Id }, gameDto);
+            return Results.CreatedAtRoute(getGameDetailsEndpoint, new { id = game.Id }, gameDto);
         });
 
         group.MapPut("/{id}", async (int id, UpdateGameDto updated, gdhubContext dbContext) =>
@@ -65,7 +65,7 @@ public static class gameEndpoints
             if (existingGame is null) return Results.NotFound();
 
             existingGame.Name = updated.Name;
-            existingGame.Rating = updated.GenreId;
+            existingGame.Rating = updated.Rating;
             existingGame.Summary = updated.Summary;
             existingGame.Details = updated.Details;
 

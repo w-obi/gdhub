@@ -9,7 +9,6 @@ builder.AddgdhubContext();
 var app = builder.Build();
 
 app.MapMiniGameEndpoints();
-app.MapFullGameEndpoints();
 app.MapAdminEndpoints();
 
 app.MigrateDb();

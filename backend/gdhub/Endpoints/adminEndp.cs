@@ -8,13 +8,13 @@ namespace gdhub.Endpoints;
 public static class adminEndpoints
 {
     const string adminEndpoint = "GetUsers";
+    const string getUserDetailsEndpoint = "GetUser";
 
-    public static void MapMiniadminEndpoints(this WebApplication app)
+    public static void MapAdminEndpoints(this WebApplication app)
     {
         var group = app.MapGroup("/admin");
 
         group.MapGet("/", async (gdhubContext dbContext) => await dbContext.Users
-        .Include(user => user)
         .Select(user => new UserSummaryDto(
             user.Id,
             user.Email,
@@ -34,7 +34,7 @@ public static class adminEndpoints
                     user.GameRecords
                 )
             );
-        });
+        }).WithName(getUserDetailsEndpoint);
 
         group.MapPost("/", async (CreateUserDto newUser, gdhubContext dbContext) =>
         {
@@ -51,13 +51,13 @@ public static class adminEndpoints
 
             UserDetailsDto userDto = new(
                     user.Id,
-                    user.Name,
+                    user.Email,
                     user.Rank,
                     user.Exp,
                     user.GameRecords
             );
 
-            return Results.CreatedAtRoute(adminEndpoint, new { id = user.Id }, userDto);
+            return Results.CreatedAtRoute(getUserDetailsEndpoint, new { id = user.Id }, userDto);
         });
 
         group.MapPut("/{id}", async (int id, UpdateUserDto updated, gdhubContext dbContext) =>
@@ -66,7 +66,7 @@ public static class adminEndpoints
 
             if (existingUser is null) return Results.NotFound();
 
-            existingUser.Name = updated.Name;
+            existingUser.Email = updated.Email;
             existingUser.Rank = updated.Rank;
             existingUser.Exp = updated.Exp;
             existingUser.GameRecords = updated.GameRecords;

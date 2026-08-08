@@ -1,9 +1,11 @@
 namespace gdhub.Dtos;
 
+using gdhub.Enum;
+
 public record UpdateUserDto
 (
     string Email,
-    int Rank,
+    UserRank Rank,
     int Exp,
     Dictionary<string, int> GameRecords
 );

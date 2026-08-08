@@ -1,9 +1,11 @@
 namespace gdhub.Dtos;
 
+using gdhub.Enum;
+
 public record UserSummaryDto
 (
     int Id,
     string Email,
-    int Rank,
+    UserRank Rank,
     int Exp
 );
