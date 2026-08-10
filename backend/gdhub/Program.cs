@@ -14,3 +14,4 @@ app.MapAdminEndpoints();
 app.MigrateDb();
 app.Run();
 //dotnet ef migrations add InitialCreate
+//dotnet ef migrations add InitialPostgres
