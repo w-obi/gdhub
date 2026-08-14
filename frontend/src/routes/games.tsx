@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { Search } from "lucide-react";
+import { ChevronRight, Search } from "lucide-react";
 
 import {
   InputGroup,
@@ -17,6 +17,8 @@ import fondo from "@/assets/gamepng/fondo.png";
 import hld from "@/assets/gamepng/hld.png";
 import pic from "@/assets/gamepng/pic.png";
 import toy from "@/assets/gamepng/toy.png";
+import { Button } from "@base-ui/react";
+import { useState } from "react";
 
 export const Route = createFileRoute("/games")({
   component: RouteComponent,
@@ -54,25 +56,40 @@ const games: gameSummary[] = [
   },
 ];
 
+const handleSearchSubmit = () => {};
+
 function RouteComponent() {
   const { isLight } = Route.useRouteContext();
+  const [sinput, setSinput] = useState<string>("");
 
   return (
     <div className="flex flex-col justify-center items-center">
       <h1 className="font-bold text-4xl mt-16">List of Games</h1>
 
       <InputGroup className="mt-8 max-w-xs">
-        <InputGroupInput placeholder="Search..." />
+        <InputGroupInput
+          placeholder="Search..."
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            setSinput(event.target.value);
+          }}
+        />
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
-        <InputGroupAddon align="inline-end">12 results</InputGroupAddon>
+        <InputGroupAddon align="inline-end">
+          <Button
+            className="cursor-pointer rounded-md hover:bg-zinc-300"
+            onClick={handleSearchSubmit}
+          >
+            <ChevronRight />
+          </Button>
+        </InputGroupAddon>
       </InputGroup>
 
       <div className="mt-8 grid grid-cols-3">
         {games.map((game, id) => (
           <div
-            className={`p-6 border-black border-t-4 border-l-4 ${id % 3 == 2 ? "border-r-4" : ""} ${id / 3 >= games.length / 3 - 1 ? "border-b-4" : ""} border-black`}
+            className={`p-6 border-black border-t-4 border-l-4 ${id % 3 == 2 ? "border-r-4" : ""} ${id / 3 >= games.length / 3 - 1 ? "border-b-4" : ""} border-black cursor-pointer`}
           >
             <p className="mb-4">{game.Name}</p>
             <img

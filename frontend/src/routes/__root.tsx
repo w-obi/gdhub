@@ -1,9 +1,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-
 import { AppSidebar } from "@/custcomp/app-sidebar";
-
 import { Button } from "@/components/ui/button";
-
+import { ThemeProvider } from "@/components/theme-provider";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,11 +11,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ModeToggle } from "@/custcomp/mode-toggle";
 
-import { Sun, Moon, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 import {
-  createRootRoute,
   createRootRouteWithContext,
   Link,
   Outlet,
@@ -33,85 +31,83 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RouteComponent() {
   const [isLogged, setIsLogged] = useState<boolean>(false);
-  const [isLight, setIsLight] = useState<boolean>(false);
   const [lang, setLang] = useState<string>("ENG");
 
   return (
-    <SidebarProvider>
-      <AppSidebar />
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <SidebarProvider>
+        <AppSidebar />
 
-      <main className="flex-1 flex flex-col min-h-screen bg-zinc-50 overflow-hidden w-full">
-        <div className="flex justify-between items-center px-4 mt-1">
-          <nav className="flex gap-4 items-center p-2">
-            <SidebarTrigger />
+        <main className="flex-1 flex flex-col min-h-screen overflow-hidden w-full">
+          <div className="flex justify-between items-center px-4 mt-1">
+            <nav className="flex gap-4 items-center p-2">
+              <SidebarTrigger />
 
-            <Link to="/" className="[&.active]:font-bold">
-              Home
-            </Link>
-            <Link to="/games" className="[&.active]:font-bold">
-              Games
-            </Link>
-            <Link to="/admin" className="[&.active]:font-bold">
-              Admin panel
-            </Link>
-          </nav>
+              <Link to="/" className="[&.active]:font-bold">
+                Home
+              </Link>
+              <Link to="/games" className="[&.active]:font-bold">
+                Games
+              </Link>
+              <Link to="/admin" className="[&.active]:font-bold">
+                Admin panel
+              </Link>
+            </nav>
 
-          <div className="m-2 flex">
-            <DropdownMenu>
-              <DropdownMenuTrigger render={<Button variant="outline" />}>
-                {lang}
-                <ChevronDown />
-              </DropdownMenuTrigger>
+            <div className="m-2 flex">
+              <DropdownMenu>
+                <DropdownMenuTrigger render={<Button variant="outline" />}>
+                  {lang}
+                  <ChevronDown />
+                </DropdownMenuTrigger>
 
-              <DropdownMenuContent>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>ENG</DropdownMenuItem>
-                  <DropdownMenuItem>RUS</DropdownMenuItem>
-                  <DropdownMenuItem>KAZ</DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                <DropdownMenuContent>
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem onClick={() => setLang("ENG")}>
+                      ENG
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLang("RUS")}>
+                      RUS
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLang("KAZ")}>
+                      KAZ
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
-            <Button
-              className={`ml-2 mr-2 ${isLight ? "bg-black" : "bg-white"}`}
-              onClick={() => setIsLight(!isLight)}
-            >
-              {isLight ? <Sun color="#ffffff" /> : <Moon color="#000000" />}
-            </Button>
+              <ModeToggle />
 
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                render={
-                  <Button variant="outline" className="bg-black text-white" /> // fix theming
-                }
-              >
-                Settings
-              </DropdownMenuTrigger>
+              <DropdownMenu>
+                <DropdownMenuTrigger render={<Button variant="outline" />}>
+                  Settings
+                </DropdownMenuTrigger>
 
-              <DropdownMenuContent>
-                <DropdownMenuGroup>
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Billing</DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  <DropdownMenuItem>Team</DropdownMenuItem>
-                  <DropdownMenuItem>Subscription</DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                <DropdownMenuContent>
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>Billing</DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>Team</DropdownMenuItem>
+                    <DropdownMenuItem>Subscription</DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
-        </div>
 
-        <hr className="my-1" />
+          <hr className="my-1" />
 
-        <div className="p-12">
-          <Outlet />
-        </div>
+          <div className="p-12">
+            <Outlet />
+          </div>
 
-        <TanStackRouterDevtools />
-      </main>
-    </SidebarProvider>
+          <TanStackRouterDevtools />
+        </main>
+      </SidebarProvider>
+    </ThemeProvider>
   );
 }
