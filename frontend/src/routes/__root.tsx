@@ -106,7 +106,7 @@ function RouteComponent() {
 
         <hr className="my-1" />
 
-        <div className="p-4">
+        <div className="p-12">
           <Outlet />
         </div>
 

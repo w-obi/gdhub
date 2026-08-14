@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-import galaga from "@/assets/space_shoot.png";
-import shooter from "@/assets/shoot.png";
-import uknow from "@/assets/sans.png";
+import galaga from "@/assets/gamepng/space_shoot.png";
+import shooter from "@/assets/gamepng/shoot.png";
+import uknow from "@/assets/gamepng/sans.png";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
@@ -20,7 +20,7 @@ function RouteComponent() {
   const { isLight } = Route.useRouteContext();
 
   return (
-    <div className="flex flex-col justify-center items-center self-center">
+    <div className="flex flex-col justify-center items-center">
       <h1 className="font-bold text-4xl mt-16">Welcome to the gdHub!</h1>
 
       <p className="mt-8 w-[60%]">
@@ -40,7 +40,7 @@ function RouteComponent() {
           Here is a list of games chosen by the owner of this website:{" "}
         </p>
         <ScrollArea className="w-full">
-          <div className="flex p-2 space-x-8">
+          <div className="flex p-2 space-x-8 pb-8">
             {gamePics.map((gamePic) => (
               <figure key={gamePic.Name} className="shrink-0 w-[50%]">
                 <div className="rounded-md">
