@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "@/custcomp/mode-toggle";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LogOut } from "lucide-react";
 
 import {
   createRootRouteWithContext,
@@ -23,16 +23,19 @@ import {
 
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
-import { useState } from "react";
-
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "@/tools/store";
+import type { RouterContext } from "@/interfaces/interfaces";
+import { exitUser } from "@/tools/storeRed/storeLog";
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const [isLogged, setIsLogged] = useState<boolean>(false);
+  const isLog = useSelector((state: RootState) => state.auth.isLog);
+  const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
 
   const changeLang = (lang: string) => {
@@ -52,10 +55,23 @@ function RouteComponent() {
               <Link to="/" className="[&.active]:font-bold">
                 <h1>{t("root.home")}</h1>
               </Link>
-              <Link to="/games" className="[&.active]:font-bold">
-                {t("root.games")}
-              </Link>
-              <Link to="/admin" className="[&.active]:font-bold">
+              {isLog ? (
+                <Link to="/games" className="[&.active]:font-bold">
+                  {t("root.games")}
+                </Link>
+              ) : (
+                <Link
+                  to="/auth"
+                  search={{ redirect: "/games" }} // This creates /auth?redirect=/games
+                  className="[&.active]:font-bold"
+                >
+                  {t("root.games")}
+                </Link>
+              )}
+              <Link
+                to={isLog ? "/admin" : "/auth"}
+                className="[&.active]:font-bold"
+              >
                 {t("root.adminpanel")}
               </Link>
             </nav>
@@ -102,6 +118,10 @@ function RouteComponent() {
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
+
+              <Button onClick={() => dispatch(exitUser())}>
+                <LogOut />
+              </Button>
             </div>
           </div>
 

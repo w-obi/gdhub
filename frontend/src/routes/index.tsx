@@ -6,15 +6,7 @@ import uknow from "@/assets/gamepng/sans.png";
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { useTranslation } from "react-i18next";
 
@@ -29,7 +21,6 @@ const gamePics: gamePics[] = [
 ];
 
 function RouteComponent() {
-  const { isLight } = Route.useRouteContext();
   const { t, i18n } = useTranslation();
 
   return (

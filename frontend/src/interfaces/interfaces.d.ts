@@ -1,5 +1,4 @@
 interface RouterContext {
-  isLight: boolean;
 }
 
 interface gamePics {
@@ -13,3 +12,7 @@ interface gameSummary {
   Rating: number;
   Summary: string;
 }
+
+export type AuthSearch = {
+  redirect?: string;
+};

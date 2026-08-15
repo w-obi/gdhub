@@ -4,8 +4,12 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import "@/tools/i18n";
 import "./index.css";
+import { Provider } from "react-redux";
+import { store } from "./tools/store";
 
-const router = createRouter({ routeTree, context: { isLight: false } });
+const router = createRouter({
+  routeTree,
+});
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -15,6 +19,8 @@ declare module "@tanstack/react-router" {
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 );

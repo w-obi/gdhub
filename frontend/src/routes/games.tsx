@@ -7,15 +7,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@base-ui/react";
 
 import galaga from "@/assets/gamepng/space_shoot.png";
@@ -69,7 +61,6 @@ const games: gameSummary[] = [
 const handleSearchSubmit = () => {};
 
 function RouteComponent() {
-  const { isLight } = Route.useRouteContext();
   const [sinput, setSinput] = useState<string>("");
   const { t, i18n } = useTranslation();
 
@@ -96,25 +87,6 @@ function RouteComponent() {
           </Button>
         </InputGroupAddon>
       </InputGroup>
-
-      {/* <div className="mt-8 grid grid-cols-3">
-        {games.map((game, id) => (
-          <div
-            className={`p-6 border-black border-t-4 border-l-4 ${id % 3 == 2 ? "border-r-4" : ""} ${id / 3 >= games.length / 3 - 1 ? "border-b-4" : ""} border-black cursor-pointer`}
-          >
-            <p className="mb-4">{game.Name}</p>
-            <img
-              src={game.Pic}
-              alt={game.Name}
-              className="aspect-square h-auto w-auto"
-              width={10}
-              height={10}
-            />
-            <span className="mt-4">{game.Rating}</span>
-            <p className="mt-4">{game.Summary}</p>
-          </div>
-        ))}
-      </div> */}
 
       <div className="mt-8 grid grid-cols-3">
         {games.map((game, id) => (
