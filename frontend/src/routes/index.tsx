@@ -1,10 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 import galaga from "@/assets/gamepng/space_shoot.png";
 import shooter from "@/assets/gamepng/shoot.png";
 import uknow from "@/assets/gamepng/sans.png";
+
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import { useTranslation } from "react-i18next";
 
@@ -30,37 +40,47 @@ function RouteComponent() {
 
       <p className="mt-8 font-bold">{t("index.glhf")}</p>
 
-      <div className="flex flex-col mt-4 border-4 rounded-2xl border-black p-3">
-        <p className="mb-3">{t("index.signtocont")}</p>
-        <Button>{t("index.login")}</Button>
-      </div>
+      <Card className="mt-4 w-full max-w-xs">
+        <CardHeader>
+          <CardTitle>{t("index.signtocont")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Button type="submit" className="w-full">
+            {t("index.login")}
+          </Button>
+        </CardContent>
+      </Card>
 
-      <div className="mt-8 rounded-2xl border-4 border-black p-8 w-[80%]">
-        <p className="font-bold text-2xl mb-4">{t("index.chosenones")}</p>
-        <ScrollArea className="w-full">
-          <div className="flex p-2 space-x-8 pb-8">
-            {gamePics.map((gamePic) => (
-              <figure key={gamePic.Name} className="shrink-0 w-[50%]">
-                <div className="rounded-md">
-                  <img
-                    src={gamePic.Pic}
-                    alt={gamePic.Name}
-                    className="aspect-square h-auto w-auto"
-                    width={10}
-                    height={10}
-                  />
-                </div>
-                <figcaption className="pt-2 text-xs text-muted-foreground">
-                  <span className="font-semibold text-foreground">
-                    {gamePic.Name}
-                  </span>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      </div>
+      <Card className="mt-8 w-full max-w-[80%]">
+        <CardHeader>
+          <CardTitle>{t("index.chosenones")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ScrollArea className="w-full">
+            <div className="flex p-2 space-x-8 pb-8">
+              {gamePics.map((gamePic) => (
+                <figure key={gamePic.Name} className="shrink-0 w-[50%]">
+                  <div className="rounded-md">
+                    <img
+                      src={gamePic.Pic}
+                      alt={gamePic.Name}
+                      className="aspect-square h-auto w-auto"
+                      width={10}
+                      height={10}
+                    />
+                  </div>
+                  <figcaption className="pt-2 text-xs text-muted-foreground">
+                    <span className="font-semibold text-foreground">
+                      {gamePic.Name}
+                    </span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
+        </CardContent>
+      </Card>
 
       <div className="mt-16">
         <p>{t("index.faceprob")}</p>
