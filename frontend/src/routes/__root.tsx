@@ -25,13 +25,19 @@ import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 import { useState } from "react";
 
+import { useTranslation } from "react-i18next";
+
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   const [isLogged, setIsLogged] = useState<boolean>(false);
-  const [lang, setLang] = useState<string>("ENG");
+  const { t, i18n } = useTranslation();
+
+  const changeLang = (lang: string) => {
+    i18n.changeLanguage(lang);
+  };
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -44,33 +50,33 @@ function RouteComponent() {
               <SidebarTrigger />
 
               <Link to="/" className="[&.active]:font-bold">
-                Home
+                <h1>{t("root.home")}</h1>
               </Link>
               <Link to="/games" className="[&.active]:font-bold">
-                Games
+                {t("root.games")}
               </Link>
               <Link to="/admin" className="[&.active]:font-bold">
-                Admin panel
+                {t("root.adminpanel")}
               </Link>
             </nav>
 
-            <div className="m-2 flex">
+            <div className="flex space-x-2">
               <DropdownMenu>
                 <DropdownMenuTrigger render={<Button variant="outline" />}>
-                  {lang}
+                  {i18n.language}
                   <ChevronDown />
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent>
                   <DropdownMenuGroup>
-                    <DropdownMenuItem onClick={() => setLang("ENG")}>
-                      ENG
+                    <DropdownMenuItem onClick={() => changeLang("ENG")}>
+                      {t("root.ENG")}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setLang("RUS")}>
-                      RUS
+                    <DropdownMenuItem onClick={() => changeLang("RUS")}>
+                      {t("root.RUS")}
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setLang("KAZ")}>
-                      KAZ
+                    <DropdownMenuItem onClick={() => changeLang("KAZ")}>
+                      {t("root.KAZ")}
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
@@ -80,7 +86,7 @@ function RouteComponent() {
 
               <DropdownMenu>
                 <DropdownMenuTrigger render={<Button variant="outline" />}>
-                  Settings
+                  {t("root.settings")}
                 </DropdownMenuTrigger>
 
                 <DropdownMenuContent>

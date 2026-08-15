@@ -19,6 +19,7 @@ import pic from "@/assets/gamepng/pic.png";
 import toy from "@/assets/gamepng/toy.png";
 import { Button } from "@base-ui/react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export const Route = createFileRoute("/games")({
   component: RouteComponent,
@@ -61,14 +62,15 @@ const handleSearchSubmit = () => {};
 function RouteComponent() {
   const { isLight } = Route.useRouteContext();
   const [sinput, setSinput] = useState<string>("");
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h1 className="font-bold text-4xl mt-16">List of Games</h1>
+      <h1 className="font-bold text-4xl mt-16">{t("games.gamelist")}</h1>
 
       <InputGroup className="mt-8 max-w-xs">
         <InputGroupInput
-          placeholder="Search..."
+          placeholder={t("games.searchplc")}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setSinput(event.target.value);
           }}

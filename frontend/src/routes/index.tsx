@@ -6,6 +6,8 @@ import shooter from "@/assets/gamepng/shoot.png";
 import uknow from "@/assets/gamepng/sans.png";
 import { Button } from "@/components/ui/button";
 
+import { useTranslation } from "react-i18next";
+
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
@@ -18,27 +20,23 @@ const gamePics: gamePics[] = [
 
 function RouteComponent() {
   const { isLight } = Route.useRouteContext();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <h1 className="font-bold text-4xl mt-16">Welcome to the gdHub!</h1>
+      <h1 className="font-bold text-4xl mt-16">{t("index.welcome")}</h1>
 
-      <p className="mt-8 w-[60%]">
-        This is a website where you can play games online. Also, you can upload
-        your own games made with lua, update or delete them.
-      </p>
+      <p className="mt-8 w-[60%]">{t("index.welc-desc")}</p>
 
-      <p className="mt-8 font-bold">Good luck and have fun!</p>
+      <p className="mt-8 font-bold">{t("index.glhf")}</p>
 
       <div className="flex flex-col mt-4 border-4 rounded-2xl border-black p-3">
-        <p className="mb-3">Please sign up to continue</p>
-        <Button>Login</Button>
+        <p className="mb-3">{t("index.signtocont")}</p>
+        <Button>{t("index.login")}</Button>
       </div>
 
       <div className="mt-8 rounded-2xl border-4 border-black p-8 w-[80%]">
-        <p className="font-bold text-2xl mb-4">
-          Here is a list of games chosen by the owner of this website:{" "}
-        </p>
+        <p className="font-bold text-2xl mb-4">{t("index.chosenones")}</p>
         <ScrollArea className="w-full">
           <div className="flex p-2 space-x-8 pb-8">
             {gamePics.map((gamePic) => (
@@ -65,7 +63,7 @@ function RouteComponent() {
       </div>
 
       <div className="mt-16">
-        <p>If you are facing any kind of problems, feel free to contact us.</p>
+        <p>{t("index.faceprob")}</p>
 
         <p>+0(000)0000000</p>
       </div>

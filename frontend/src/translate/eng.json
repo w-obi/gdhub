@@ -1,0 +1,30 @@
+{
+    "root": {
+        "home": "Home",
+        "games": "Games",
+        "adminpanel": "Admin panel",
+        "ENG": "ENG",
+        "RUS": "RUS",
+        "KAZ": "KAZ",
+        "settings": "Settings"
+    },
+
+    "index": {
+        "welcome": "Welcome to the gdHub!",
+        "welc-desc": "This is a website where you can play games online. Also, you can upload your own games made with lua, update or delete them.",
+        "glhf": "Good luck and have fun!",
+        "signtocont": "Please sign up to continue",
+        "login": "Login",
+        "chosenones": "Here is a list of games chosen by the owner of this website:",
+        "faceprob": "If you are facing any kind of problems, feel free to contact us."
+    },
+    
+    "games": {
+        "gamelist": "List of Games",
+        "searchplc": "Search.."
+    },
+    
+    "auth": {},
+    
+    "admin": {}
+}
