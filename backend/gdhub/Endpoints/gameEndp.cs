@@ -10,9 +10,9 @@ public static class gameEndpoints
     const string gameEndpoint = "GetGame";
     const string getGameDetailsEndpoint = "GetGameDetails";
 
-    public static void MapMiniGameEndpoints(this WebApplication app)
+    public static void MapGameEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("/games");
+        var group = app.MapGroup("/api/games");
 
         group.MapGet("/", async (gdhubContext dbContext) => await dbContext.Games
         .Select(game => new GameSummaryDto(

@@ -62,7 +62,7 @@ function RouteComponent() {
               ) : (
                 <Link
                   to="/auth"
-                  search={{ redirect: "/games" }} // This creates /auth?redirect=/games
+                  search={{ redirect: "/games" }} // /auth?redirect=/games
                   className="[&.active]:font-bold"
                 >
                   {t("root.games")}

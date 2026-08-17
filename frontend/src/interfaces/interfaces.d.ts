@@ -1,12 +1,12 @@
-interface RouterContext {
+export interface RouterContext {
 }
 
-interface gamePics {
+export type gamePics = {
   Name: string;
   Pic: string;
 }
 
-interface gameSummary {
+export interface gameSummary {
   Name: string;
   Pic: string;
   Rating: number;

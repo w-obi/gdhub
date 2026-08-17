@@ -12,7 +12,7 @@ public static class adminEndpoints
 
     public static void MapAdminEndpoints(this WebApplication app)
     {
-        var group = app.MapGroup("/admin");
+        var group = app.MapGroup("/api/admin");
 
         group.MapGet("/", async (gdhubContext dbContext) => await dbContext.Users
         .Select(user => new UserSummaryDto(

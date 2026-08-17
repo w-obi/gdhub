@@ -1,5 +1,4 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,10 +11,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 import { useDispatch } from "react-redux";
 import { logUser } from "@/tools/storeRed/storeLog";
 import type { AuthSearch } from "@/interfaces/interfaces";
+import { useGoogleLogin } from "@react-oauth/google";
+import api from "@/tools/api";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): AuthSearch => {
@@ -36,6 +36,25 @@ function RouteComponent() {
     dispatch(logUser());
     navigate({ to: redirect || "/" });
   };
+
+  const logWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const res = await api.post("/auth/google", {
+          accessToken: tokenResponse.access_token,
+        });
+
+        if (res.status === 200) {
+          localStorage.setItem("access_token", res.data.token);
+          dispatch(logUser());
+          navigate({ to: redirect || "/" });
+        }
+      } catch (error) {
+        console.error("Backend validation failed", error);
+      }
+    },
+    onError: () => console.log("Google Login Failed"),
+  });
 
   return (
     <form className="flex flex-col justify-center items-center">
@@ -75,10 +94,18 @@ function RouteComponent() {
           </div>
         </CardContent>
         <CardFooter className="flex-col gap-2">
-          <Button type="submit" className="w-full" onClick={handleLog}>
+          <Button
+            type="submit"
+            className="w-full"
+            onClick={() => logWithGoogle}
+          >
             Login
           </Button>
-          <Button variant="outline" className="w-full" onClick={handleLog}>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() => logWithGoogle}
+          >
             Login with Google
           </Button>
         </CardFooter>

@@ -6,6 +6,7 @@ import "@/tools/i18n";
 import "./index.css";
 import { Provider } from "react-redux";
 import { store } from "./tools/store";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const router = createRouter({
   routeTree,
@@ -20,7 +21,9 @@ declare module "@tanstack/react-router" {
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <GoogleOAuthProvider clientId="759577890533-acsaf4v3799bih0rv04var77jf1bbc4m.apps.googleusercontent.com">
+        <RouterProvider router={router} />
+      </GoogleOAuthProvider>
     </Provider>
   </StrictMode>,
 );

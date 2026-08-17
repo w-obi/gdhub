@@ -21,6 +21,7 @@ import pic from "@/assets/gamepng/pic.png";
 import toy from "@/assets/gamepng/toy.png";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { gameSummary } from "@/interfaces/interfaces";
 
 export const Route = createFileRoute("/games")({
   component: RouteComponent,

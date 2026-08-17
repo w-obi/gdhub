@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
 import galaga from "@/assets/gamepng/space_shoot.png";
 import shooter from "@/assets/gamepng/shoot.png";
@@ -9,8 +9,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { useTranslation } from "react-i18next";
+import type { AuthSearch, gamePics } from "@/interfaces/interfaces";
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>): AuthSearch => {
+    return {
+      redirect: search.redirect as string | undefined,
+    };
+  },
   component: RouteComponent,
 });
 
@@ -22,6 +28,7 @@ const gamePics: gamePics[] = [
 
 function RouteComponent() {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -36,7 +43,11 @@ function RouteComponent() {
           <CardTitle>{t("index.signtocont")}</CardTitle>
         </CardHeader>
         <CardContent>
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full"
+            onClick={() => navigate({ to: "/auth" })}
+          >
             {t("index.login")}
           </Button>
         </CardContent>
