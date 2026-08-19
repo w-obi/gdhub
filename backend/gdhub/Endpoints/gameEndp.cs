@@ -18,7 +18,9 @@ public static class gameEndpoints
         .Select(game => new GameSummaryDto(
             game.Id,
             game.Name,
+            game.Owner,
             game.Rating,
+            game.PicUrl,
             game.Summary
         )).AsNoTracking().ToListAsync()).WithName(gameEndpoint);
 
@@ -29,7 +31,9 @@ public static class gameEndpoints
                     new GameDetailsDto(
                     game.Id,
                     game.Name,
+                    game.Owner,
                     game.Rating,
+                    game.PicUrl,
                     game.Details
                 )
             );
@@ -40,7 +44,9 @@ public static class gameEndpoints
             Game game = new()
             {
                 Name = newGame.Name,
+                Owner = newGame.Owner,
                 Rating = newGame.Rating,
+                PicUrl = newGame.PicUrl,
                 Summary = newGame.Summary,
                 Details = newGame.Details
             };
@@ -51,7 +57,9 @@ public static class gameEndpoints
             GameDetailsDto gameDto = new(
                     game.Id,
                     game.Name,
+                    game.Owner,
                     game.Rating,
+                    game.PicUrl,
                     game.Details
             );
 
@@ -65,7 +73,9 @@ public static class gameEndpoints
             if (existingGame is null) return Results.NotFound();
 
             existingGame.Name = updated.Name;
+            existingGame.Owner = updated.Owner;
             existingGame.Rating = updated.Rating;
+            existingGame.PicUrl = updated.PicUrl;
             existingGame.Summary = updated.Summary;
             existingGame.Details = updated.Details;
 
