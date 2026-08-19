@@ -7,5 +7,6 @@ public record UserSummaryDto
     int Id,
     string Email,
     UserRank Rank,
-    int Exp
+    int Exp,
+    string Role
 );

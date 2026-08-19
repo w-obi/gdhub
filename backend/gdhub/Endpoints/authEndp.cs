@@ -28,7 +28,8 @@ public static class AuthEndpoints
                         Email = payload.Email,
                         Rank = gdhub.Enum.UserRank.Padawan,
                         Exp = 0,
-                        GameRecords = new Dictionary<string, int>()
+                        GameRecords = new Dictionary<string, int>(),
+                        Role = "User"
                     };
 
                     db.Users.Add(newUser);

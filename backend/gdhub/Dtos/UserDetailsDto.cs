@@ -8,5 +8,6 @@ public record UserDetailsDto
     string Email,
     UserRank Rank,
     int Exp,
-    Dictionary<string, int> GameRecords
+    Dictionary<string, int> GameRecords,
+    string Role
 );

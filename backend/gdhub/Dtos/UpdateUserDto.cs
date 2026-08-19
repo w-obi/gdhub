@@ -7,5 +7,6 @@ public record UpdateUserDto
     string Email,
     UserRank Rank,
     int Exp,
-    Dictionary<string, int> GameRecords
+    Dictionary<string, int> GameRecords,
+    string Role
 );

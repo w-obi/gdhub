@@ -19,7 +19,8 @@ public static class adminEndpoints
             user.Id,
             user.Email,
             user.Rank,
-            user.Exp
+            user.Exp,
+            user.Role
         )).AsNoTracking().ToListAsync()).WithName(adminEndpoint);
 
         group.MapGet("/{id}", async (int id, gdhubContext dbContext) =>
@@ -31,7 +32,8 @@ public static class adminEndpoints
                     user.Email,
                     user.Rank,
                     user.Exp,
-                    user.GameRecords
+                    user.GameRecords,
+                    user.Role
                 )
             );
         }).WithName(getUserDetailsEndpoint);
@@ -43,7 +45,8 @@ public static class adminEndpoints
                 Email = newUser.Email,
                 Rank = newUser.Rank,
                 Exp = newUser.Exp,
-                GameRecords = newUser.GameRecords
+                GameRecords = newUser.GameRecords,
+                Role = newUser.Role
             };
 
             dbContext.Users.Add(user);
@@ -54,7 +57,8 @@ public static class adminEndpoints
                     user.Email,
                     user.Rank,
                     user.Exp,
-                    user.GameRecords
+                    user.GameRecords,
+                    user.Role
             );
 
             return Results.CreatedAtRoute(getUserDetailsEndpoint, new { id = user.Id }, userDto);
@@ -70,6 +74,7 @@ public static class adminEndpoints
             existingUser.Rank = updated.Rank;
             existingUser.Exp = updated.Exp;
             existingUser.GameRecords = updated.GameRecords;
+            existingUser.Role = updated.Role;
 
             await dbContext.SaveChangesAsync();
 
