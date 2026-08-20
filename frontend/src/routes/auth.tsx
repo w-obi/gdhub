@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -31,7 +30,7 @@ function RouteComponent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { redirect } = Route.useSearch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const handleLog = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -64,9 +63,6 @@ function RouteComponent() {
         <CardHeader>
           <CardTitle>{t("auth.logtoacc")}</CardTitle>
           <CardDescription>{t("auth.enteremail")}</CardDescription>
-          <CardAction>
-            <Button variant="link">{t("auth.signup")}</Button>
-          </CardAction>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
@@ -82,12 +78,9 @@ function RouteComponent() {
             <div className="grid gap-2">
               <div className="flex items-center">
                 <Label htmlFor="password">{t("auth.password")}</Label>
-                <a
-                  href="#"
-                  className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                >
+                <p className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
                   {t("auth.forgotpassword")}
-                </a>
+                </p>
               </div>
               <Input id="password" type="password" required />
             </div>
@@ -98,7 +91,7 @@ function RouteComponent() {
             type="submit"
             variant="outline"
             className="w-full"
-            onClick={handleLog}
+            onClick={() => logWithGoogle()}
           >
             {t("auth.logoogle")}
           </Button>

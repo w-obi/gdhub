@@ -13,7 +13,7 @@ public class gdhubContext(DbContextOptions<gdhubContext> options) : DbContext(op
     {
         modelBuilder.Entity<User>()
             .Property(u => u.Rank)
-            .HasConversion<string>(); // Tells the database to save it as Text!
+            .HasConversion<string>(); // Tells the database to save it as Text
 
         modelBuilder.Entity<User>()
             .Property(u => u.GameRecords)

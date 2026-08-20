@@ -4,7 +4,7 @@ public record CreateGameDto
 (
     string Name,
     string Owner,
-    int Rating,
+    float Rating,
     string PicUrl,
     string Summary,
     string Details

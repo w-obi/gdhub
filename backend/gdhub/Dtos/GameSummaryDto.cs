@@ -5,7 +5,7 @@ public record GameSummaryDto
     int Id,
     string Name,
     string Owner,
-    int Rating,
+    float Rating,
     string PicUrl,
     string Summary
 );
