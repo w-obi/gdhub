@@ -10,10 +10,6 @@ export type AuthSearch = {
   redirect?: string;
 };
 
-export type cId = {
-  id: number | string | undefined;
-}
-
 export interface CreateUserDto {
   Email: string;
   Rank: string;

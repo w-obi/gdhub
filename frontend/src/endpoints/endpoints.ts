@@ -1,4 +1,4 @@
-import type { cId, CreateGameDto, CreateUserDto, GameDetailsDto, UpdateGameDto, UpdateUserDto, UserDetailsDto } from "@/interfaces/interfaces";
+import type { CreateGameDto, CreateUserDto, GameDetailsDto, GameSummaryDto, UpdateGameDto, UpdateUserDto, UserDetailsDto, UserSummaryDto } from "@/interfaces/interfaces";
 import api from "@/tools/api";
 import useSWR, { mutate } from "swr";
 
@@ -8,7 +8,7 @@ const fetcher = (url: string) => api.get(url).then((res) => res.data);
 // ----------gameEndp---------------
 
 export function getGames() {
-  const { data, error, isLoading, mutate } = useSWR("/games", fetcher);
+  const { data, error, isLoading, mutate } = useSWR<GameSummaryDto[]>("/games", fetcher);
 
   return {
     games: data,
@@ -18,7 +18,7 @@ export function getGames() {
   };
 }
 
-export function getGame(id: cId) {
+export function getGame(id: number) {
   const { data, error, isLoading } = useSWR<GameDetailsDto>(
     id ? `/games/${id}` : null, 
     fetcher
@@ -57,7 +57,7 @@ export async function deleteGame(id: number) {
 // ----------adminEndp---------------
 
 export function getUsers() {
-  const { data, error, isLoading, mutate } = useSWR("/admin", fetcher);
+  const { data, error, isLoading, mutate } = useSWR<UserSummaryDto[]>("/admin", fetcher);
 
   return {
     games: data,
@@ -67,7 +67,7 @@ export function getUsers() {
   };
 }
 
-export function getUser(id: cId) {
+export function getUser(id: number) {
   const { data, error, isLoading } = useSWR<UserDetailsDto>(
     id ? `/admin/${id}` : null, 
     fetcher

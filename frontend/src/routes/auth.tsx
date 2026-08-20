@@ -16,6 +16,7 @@ import { logUser } from "@/tools/storeRed/storeLog";
 import type { AuthSearch } from "@/interfaces/interfaces";
 import { useGoogleLogin } from "@react-oauth/google";
 import api from "@/tools/api";
+import { useTranslation } from "react-i18next";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): AuthSearch => {
@@ -30,6 +31,7 @@ function RouteComponent() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { redirect } = Route.useSearch();
+  const { t, i18n } = useTranslation();
 
   const handleLog = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -60,18 +62,16 @@ function RouteComponent() {
     <form className="flex flex-col justify-center items-center">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
+          <CardTitle>{t("auth.logtoacc")}</CardTitle>
+          <CardDescription>{t("auth.enteremail")}</CardDescription>
           <CardAction>
-            <Button variant="link">Sign Up</Button>
+            <Button variant="link">{t("auth.signup")}</Button>
           </CardAction>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("auth.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -81,12 +81,12 @@ function RouteComponent() {
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("auth.password")}</Label>
                 <a
                   href="#"
                   className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
                 >
-                  Forgot your password?
+                  {t("auth.forgotpassword")}
                 </a>
               </div>
               <Input id="password" type="password" required />
@@ -96,17 +96,11 @@ function RouteComponent() {
         <CardFooter className="flex-col gap-2">
           <Button
             type="submit"
-            className="w-full"
-            onClick={() => logWithGoogle}
-          >
-            Login
-          </Button>
-          <Button
             variant="outline"
             className="w-full"
-            onClick={() => logWithGoogle}
+            onClick={handleLog}
           >
-            Login with Google
+            {t("auth.logoogle")}
           </Button>
         </CardFooter>
       </Card>

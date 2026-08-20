@@ -16,15 +16,29 @@
         "signtocont": "Please sign up to continue",
         "login": "Login",
         "chosenones": "Here is a list of games chosen by the owner of this website:",
-        "faceprob": "If you are facing any kind of problems, feel free to contact us."
+        "faceprob": "If you are facing any kind of problems, feel free to contact us.",
+        "error": "Error when fetching data",
+        "loading": "Loading",
+        "nogames": "No games yet"
     },
     
     "games": {
         "gamelist": "List of Games",
-        "searchplc": "Search.."
+        "searchplc": "Search..",
+        "error": "Error when fetching data",
+        "loading": "Loading",
+        "nogames": "No games yet"
     },
     
-    "auth": {},
+    "auth": {
+        "logtoacc": "Login",
+        "enteremail": "Enter your email below to login",
+        "signup": "Sign Up",
+        "email": "Email",
+        "password": "Password",
+        "forgotpassword": "Forgot your password?",
+        "logoogle": "Login with Google"
+    },
     
     "admin": {}
 }
