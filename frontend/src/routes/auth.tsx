@@ -2,20 +2,18 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useDispatch } from "react-redux";
 import { logUser } from "@/tools/storeRed/storeLog";
 import type { AuthSearch } from "@/interfaces/interfaces";
 import { useGoogleLogin } from "@react-oauth/google";
 import api from "@/tools/api";
 import { useTranslation } from "react-i18next";
+import { roleAdmin, roleUser } from "@/tools/storeRed/storeUsrRole";
 
 export const Route = createFileRoute("/auth")({
   validateSearch: (search: Record<string, unknown>): AuthSearch => {
@@ -48,6 +46,12 @@ function RouteComponent() {
         if (res.status === 200) {
           localStorage.setItem("access_token", res.data.token);
           dispatch(logUser());
+
+          const userRole = res.data.role;
+
+          if (userRole == "Admin") dispatch(roleAdmin());
+          else dispatch(roleUser());
+
           navigate({ to: redirect || "/" });
         }
       } catch (error) {
@@ -64,28 +68,6 @@ function RouteComponent() {
           <CardTitle>{t("auth.logtoacc")}</CardTitle>
           <CardDescription>{t("auth.enteremail")}</CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="flex flex-col gap-6">
-            <div className="grid gap-2">
-              <Label htmlFor="email">{t("auth.email")}</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="m@example.com"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">{t("auth.password")}</Label>
-                <p className="ml-auto inline-block text-sm underline-offset-4 hover:underline">
-                  {t("auth.forgotpassword")}
-                </p>
-              </div>
-              <Input id="password" type="password" required />
-            </div>
-          </div>
-        </CardContent>
         <CardFooter className="flex-col gap-2">
           <Button
             type="submit"

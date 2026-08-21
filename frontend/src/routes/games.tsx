@@ -21,7 +21,7 @@ export const Route = createFileRoute("/games")({
 
 function RouteComponent() {
   const [sinput, setSinput] = useState<string>("");
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { games, isLoading, isError } = getGames();
   const gamesArr = Array.isArray(games) ? games : [];
 

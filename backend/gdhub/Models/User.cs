@@ -16,5 +16,5 @@ public class User
     public Dictionary<string, int> GameRecords { get; set; } =
         new Dictionary<string, int>();
 
-    public required string Role;
+    public required string Role { get; set; }
 }

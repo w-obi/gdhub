@@ -20,6 +20,6 @@ public class gdhubContext(DbContextOptions<gdhubContext> options) : DbContext(op
             .HasConversion(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
                 v => JsonSerializer.Deserialize<Dictionary<string, int>>(v, (JsonSerializerOptions?)null) ?? new Dictionary<string, int>()
-            );
+            ).HasColumnType("jsonb"); ;
     }
 }

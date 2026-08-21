@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logReducer from './storeRed/storeLog';
-import urlReducer from './storeRed/storeUrl';
+import roleReducer from './storeRed/storeUsrRole';
 
 export const store = configureStore({
     reducer: {
         auth: logReducer,
-        prevurl: urlReducer
+        role: roleReducer
     }
 });
 

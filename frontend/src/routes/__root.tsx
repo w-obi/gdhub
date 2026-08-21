@@ -21,7 +21,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function RouteComponent() {
   const isLog = useSelector((state: RootState) => state.auth.isLog);
-  const { t, i18n } = useTranslation();
+  const usRole = useSelector((state: RootState) => state.role.role);
+  const { t } = useTranslation();
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -49,12 +50,14 @@ function RouteComponent() {
                   {t("root.games")}
                 </Link>
               )}
-              <Link
-                to={isLog ? "/admin" : "/auth"}
-                className="[&.active]:font-bold"
-              >
-                {t("root.adminpanel")}
-              </Link>
+              {usRole == "Admin" ? (
+                <Link
+                  to={isLog ? "/admin" : "/auth"}
+                  className="[&.active]:font-bold"
+                >
+                  {t("root.adminpanel")}
+                </Link>
+              ) : null}
             </nav>
           </div>
 

@@ -10,6 +10,14 @@ export type AuthSearch = {
   redirect?: string;
 };
 
+export interface UserDto {
+  Email: string;
+  Rank: string;
+  Exp: number;
+  GameRecords: Record<string, number>;
+  Role: string;
+}
+
 export interface CreateUserDto {
   Email: string;
   Rank: string;

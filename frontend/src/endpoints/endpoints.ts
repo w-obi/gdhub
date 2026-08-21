@@ -60,7 +60,7 @@ export function getUsers() {
   const { data, error, isLoading, mutate } = useSWR<UserSummaryDto[]>("/admin", fetcher);
 
   return {
-    games: data,
+    users: data,
     isLoading,
     isError: error,
     mutate // force-refresh the data
@@ -74,7 +74,7 @@ export function getUser(id: number) {
   );
 
   return { 
-    game: data, 
+    user: data, 
     isLoading, 
     isError: error 
   };
